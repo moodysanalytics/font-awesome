@@ -23,5 +23,10 @@
   "version": "5.14.0",
   "name": "@moodysanalytics/fontawesome-free-base64",
   "main": "js/fontawesome.js",
-  "style": "css/fontawesome.css"
+  "style": "css/fontawesome.css",
+  "devDependencies": {
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.1.0"
+  }
 }
