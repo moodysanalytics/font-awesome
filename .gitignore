@@ -31,3 +31,9 @@ stunnel.log
 
 .ruby-version
 .bundle
+
+nbproject
+node_modules
+bower_components
+/vendor/
+.vs
