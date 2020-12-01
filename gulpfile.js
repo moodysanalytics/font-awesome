@@ -7,30 +7,27 @@ var gulp = require("gulp"),
     minifyCSS = require("gulp-minify-css"),
     rename = require("gulp-rename"),
     del = require('del'),
-    sourcemaps = require('gulp-sourcemaps'),
-    path = require('path');
+    sourcemaps = require('gulp-sourcemaps');
 
-gulp.task("sass", function (cb) {
-    gulp.src("scss/**/*.scss")
+
+gulp.task('scss', function (cb) {
+    gulp.src('./scss/**/*.scss')
         .pipe(sourcemaps.init())
         .pipe(sass())
-        .pipe(gulp.dest("css"))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('./css'));
+
+    cb();
+});
+
+
+gulp.task('css-minify', function (cb) {
+    gulp.src("./css/font-awesome.css", { base: "." })
         .pipe(rename(function (path) {
             path.extname = '.min.css'
         }))
         .pipe(minifyCSS())
-        .pipe(gulp.dest("css"))
-        .pipe(sourcemaps.write("css", {
-            sourceMappingURL: function (file) { //This is to reference the correct paths for our map file..
-                return "css/" + path.basename(file.path) + ".map"; //require the path module..
-            }
-        }))
-        .pipe(rename(function (path) {
-            if (path.extname == ".map") { //Only change the paths of map files not the .min files
-                path.dirname = "./css";
-            }
-        }))
-        .pipe(gulp.dest("."));
+        .pipe(gulp.dest('.'));
     cb();
 });
 
@@ -41,4 +38,4 @@ gulp.task("clean", function (cb) {
     cb();
 });
 
-gulp.task("default", gulp.series("clean", "sass"));
+gulp.task("default", gulp.series("clean", "scss", "css-minify"));
